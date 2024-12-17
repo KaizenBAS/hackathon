@@ -61,7 +61,7 @@ function Header() {
           }`}>
           <li className="text-[#252B42] text-lg font-semibold"><Link href="/">Home</Link></li>
           <li className="text-[#252B42] text-lg font-semibold"><Link href="/products">Shop</Link></li>
-          <li className="text-[#252B42] text-lg font-semibold">About</li>
+          <li className="text-[#252B42] text-lg font-semibold"><Link href="/about">About</Link></li>
           <li className="text-[#252B42] text-lg font-semibold">Contact</li>
           <li className="text-[#252B42] text-lg font-semibold">Pages</li>
 
@@ -86,7 +86,10 @@ function Header() {
           {/* Icons Section */}
           <div className="flex items-center gap-5">
             <Image src="/search.png" alt="search" width={20} height={20} />
+            <Link href='/cart'>
             <Image src="/cart.png" alt="cart" width={20} height={20} />
+            </Link>
+            
             <Image src="/fav.png" alt="favorites" width={20} height={20} />
           </div>
         </div>
