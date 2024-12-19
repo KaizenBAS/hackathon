@@ -4,7 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 
 function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prevState) => !prevState);
+  };
 
   return (
     <div className="flex flex-col bg-[#FFFFFF] w-screen">
@@ -44,10 +48,12 @@ function Header() {
         {/* Icons before the burger menu on mobile */}
         <div className="flex items-center gap-4 lg:hidden">
           <Image src="/search.png" alt="search" width={20} height={20} />
-          <Image src="/cart.png" alt="cart" width={20} height={20} />
+        <Link href='/cart'>
+        <Image src="/cart.png" alt="cart" width={20} height={20} /></Link>
+          
           {/* Burger menu */}
           <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            onClick={toggleMobileMenu}
             className="p-2 focus:outline-none"
           >
             <Image src="/burger.png" alt="menu" width={24} height={24} />
@@ -56,9 +62,11 @@ function Header() {
 
         {/* Navigation menu */}
         <ul
-          className={`absolute top-20 right-0  bg-white p-5 shadow-md flex-col gap-6 items-center lg:static lg:flex lg:flex-row lg:items-center lg:bg-transparent lg:shadow-none ${
-            isMenuOpen ? "flex" : "hidden"
-          }`}>
+          className={`absolute top-20 right-0 bg-white p-5 shadow-md flex-col gap-6 items-center lg:static lg:flex lg:flex-row lg:items-center lg:bg-transparent lg:shadow-none ${
+            isMobileMenuOpen ? "flex" : "hidden"
+          }`}
+           
+        >
           <li className="text-[#252B42] text-lg font-semibold"><Link href="/">Home</Link></li>
           <li className="text-[#252B42] text-lg font-semibold"><Link href="/products">Shop</Link></li>
           <li className="text-[#252B42] text-lg font-semibold"><Link href="/about">About</Link></li>
@@ -66,16 +74,16 @@ function Header() {
           <li className="text-[#252B42] text-lg font-semibold">Pages</li>
 
           {/* Social Icons in Mobile Menu */}
-          <div className="flex gap-5 mt-5 lg:hidden">
+          {/* <div className="flex gap-5 mt-5 lg:hidden">
             <Image src="/a.png" alt="social" width={22} height={22} />
             <Image src="/y.png" alt="social" width={22} height={22} />
             <Image src="/f.png" alt="social" width={22} height={22} />
             <Image src="/x.png" alt="social" width={22} height={22} />
-          </div>
+          </div> */}
         </ul>
 
+        {/* Login/Register Section */}
         <div className="hidden lg:flex items-center gap-8">
-          {/* Login/Register Section */}
           <div className="flex items-center gap-2">
             <Image src="/account.png" alt="account" width={20} height={20} />
             <h2 className="text-[#252B42] text-lg font-semibold whitespace-nowrap">
@@ -87,12 +95,46 @@ function Header() {
           <div className="flex items-center gap-5">
             <Image src="/search.png" alt="search" width={20} height={20} />
             <Link href='/cart'>
-            <Image src="/cart.png" alt="cart" width={20} height={20} />
+              <Image src="/cart.png" alt="cart" width={20} height={20} />
             </Link>
-            
             <Image src="/fav.png" alt="favorites" width={20} height={20} />
           </div>
         </div>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"} bg-white shadow-md mt-4 px-4 py-6 flex justify-center items-center`}
+        style={{
+          zIndex: 1000, // Ensure the mobile menu is above other content
+          position: "absolute", // Position the menu below the header
+          top: "50px", // Start below the header (header height is 78px)
+          left: 0,
+          width: "100%",
+        }}
+      >
+        <ul className="list-none flex flex-col gap-4 text-[20px] text-[#737373] font-bold">
+          <Link href="/">
+            <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
+              Home
+            </li>
+          </Link>
+          <Link href="/products">
+            <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
+              Products
+            </li>
+          </Link>
+          <Link href="/about">
+            <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
+              About
+            </li>
+          </Link>
+          <Link href="/contact">
+            <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
+              Contact
+            </li>
+          </Link>
+        </ul>
       </div>
     </div>
   );
