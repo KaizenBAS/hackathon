@@ -392,7 +392,7 @@ function Section() {
     </h2>
 
     <h3 className="text-[#737373] p-4 ">
-      We focus on ergonomics and meeting you where you work. It's only a keystroke away.
+      We focus on ergonomics and meeting you where you work. It&apos;s only a keystroke away.
     </h3>
 
     <div className="flex gap-5 p-2 justify-between">
@@ -441,7 +441,7 @@ function Section() {
     </h2>
 
     <h3 className="text-[#737373] p-4 ">
-      We focus on ergonomics and meeting you where you work. It's only a keystroke away.
+      We focus on ergonomics and meeting you where you work. It&apos;s only a keystroke away.
     </h3>
 
     <div className="flex gap-5 p-2 justify-between">
@@ -490,7 +490,7 @@ function Section() {
     </h2>
 
     <h3 className="text-[#737373] p-4 ">
-      We focus on ergonomics and meeting you where you work. It's only a keystroke away.
+      We focus on ergonomics and meeting you where you work. It&apos;s only a keystroke away.
     </h3>
 
     <div className="flex gap-5 p-2 justify-between">
