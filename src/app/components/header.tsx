@@ -1,10 +1,23 @@
 'use client';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [cartItemsCount, setCartItemsCount] = useState(0);
+
+  // Cart counter functionality
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+      setCartItemsCount(cartItems.length);
+    };
+
+    updateCartCount(); // Initial load
+    window.addEventListener('storage', updateCartCount);
+    return () => window.removeEventListener('storage', updateCartCount);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen((prevState) => !prevState);
@@ -12,7 +25,7 @@ function Header() {
 
   return (
     <div className="flex flex-col bg-[#FFFFFF] w-screen">
-      {/* Top bar (hidden on mobile, visible on large screens) */}
+      {/* Top bar (hidden on mobile) */}
       <div className="w-screen h-[58px] bg-[#252B42] items-center justify-between hidden lg:flex">
         <div className="flex gap-5 items-center ml-10">
           <div className="flex gap-5 items-center">
@@ -45,13 +58,17 @@ function Header() {
         {/* Logo */}
         <h1 className="text-4xl text-[#252B42] font-bold">Bandage</h1>
 
-        {/* Icons before the burger menu on mobile */}
+        {/* Mobile Icons */}
         <div className="flex items-center gap-4 lg:hidden">
           <Image src="/search.png" alt="search" width={20} height={20} />
-        <Link href='/cart'>
-        <Image src="/cart.png" alt="cart" width={20} height={20} /></Link>
-          
-          {/* Burger menu */}
+          <Link href='/cart' className="relative">
+            <Image src="/cart.png" alt="cart" width={20} height={20} />
+            {cartItemsCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                {cartItemsCount}
+              </span>
+            )}
+          </Link>
           <button
             onClick={toggleMobileMenu}
             className="p-2 focus:outline-none"
@@ -60,29 +77,24 @@ function Header() {
           </button>
         </div>
 
-        {/* Navigation menu */}
-        <ul
-          className={`absolute top-20 right-0 bg-white p-5 shadow-md flex-col gap-6 items-center lg:static lg:flex lg:flex-row lg:items-center lg:bg-transparent lg:shadow-none ${
-            isMobileMenuOpen ? "flex" : "hidden"
-          }`}
-           
-        >
-          <li className="text-[#252B42] text-lg font-semibold"><Link href="/">Home</Link></li>
-          <li className="text-[#252B42] text-lg font-semibold"><Link href="/products">Shop</Link></li>
-          <li className="text-[#252B42] text-lg font-semibold"><Link href="/about">About</Link></li>
-          <li className="text-[#252B42] text-lg font-semibold">Contact</li>
+        {/* Desktop Navigation */}
+        <ul className={`hidden lg:flex lg:flex-row lg:items-center lg:gap-6`}>
+          <li className="text-[#252B42] text-lg font-semibold">
+            <Link href="/">Home</Link>
+          </li>
+          <li className="text-[#252B42] text-lg font-semibold">
+            <Link href="/products">Shop</Link>
+          </li>
+          <li className="text-[#252B42] text-lg font-semibold">
+            <Link href="/about">About</Link>
+          </li>
+          <li className="text-[#252B42] text-lg font-semibold">
+            <Link href="/contact">Contact</Link>
+          </li>
           <li className="text-[#252B42] text-lg font-semibold">Pages</li>
-
-          {/* Social Icons in Mobile Menu */}
-          {/* <div className="flex gap-5 mt-5 lg:hidden">
-            <Image src="/a.png" alt="social" width={22} height={22} />
-            <Image src="/y.png" alt="social" width={22} height={22} />
-            <Image src="/f.png" alt="social" width={22} height={22} />
-            <Image src="/x.png" alt="social" width={22} height={22} />
-          </div> */}
         </ul>
 
-        {/* Login/Register Section */}
+        {/* Desktop Login/Shopping Section */}
         <div className="hidden lg:flex items-center gap-8">
           <div className="flex items-center gap-2">
             <Image src="/account.png" alt="account" width={20} height={20} />
@@ -91,45 +103,49 @@ function Header() {
             </h2>
           </div>
 
-          {/* Icons Section */}
           <div className="flex items-center gap-5">
             <Image src="/search.png" alt="search" width={20} height={20} />
-            <Link href='/cart'>
+            <Link href='/cart' className="relative">
               <Image src="/cart.png" alt="cart" width={20} height={20} />
+              {cartItemsCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                  {cartItemsCount}
+                </span>
+              )}
             </Link>
             <Image src="/fav.png" alt="favorites" width={20} height={20} />
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Dropdown */}
       <div
-        className={`md:hidden ${isMobileMenuOpen ? "block" : "hidden"} bg-white shadow-md mt-4 px-4 py-6 flex justify-center items-center`}
+        className={`lg:hidden ${isMobileMenuOpen ? "block" : "hidden"} bg-white shadow-md px-4 py-6`}
         style={{
-          zIndex: 1000, // Ensure the mobile menu is above other content
-          position: "absolute", // Position the menu below the header
-          top: "50px", // Start below the header (header height is 78px)
+          position: "absolute",
+          top: "78px",
           left: 0,
-          width: "100%",
+          right: 0,
+          zIndex: 1000
         }}
       >
-        <ul className="list-none flex flex-col gap-4 text-[20px] text-[#737373] font-bold">
-          <Link href="/">
+        <ul className="list-none flex flex-col gap-4 text-[20px] text-[#737373] font-bold text-center">
+          <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
             <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
               Home
             </li>
           </Link>
-          <Link href="/products">
+          <Link href="/products" onClick={() => setIsMobileMenuOpen(false)}>
             <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
               Products
             </li>
           </Link>
-          <Link href="/about">
+          <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>
             <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
               About
             </li>
           </Link>
-          <Link href="/contact">
+          <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
             <li className="cursor-pointer hover:text-[#23A6F0] transition-all">
               Contact
             </li>
