@@ -48,7 +48,7 @@ function Section() {
 
           <div className="w-screen h-[200px]  text-center flex flex-col gap-3 py-20 ">
             <h2 className="text-[#252B42] text-5xl font-bold">
-              EDITOR&apos;S PICK
+              EDITORs PICK
             </h2>
 
             <h6 className="text-[#737373] text-2xl ">
@@ -392,7 +392,7 @@ function Section() {
     </h2>
 
     <h3 className="text-[#737373] p-4 ">
-      We focus on ergonomics and meeting you where you work. It&apos;s only a keystroke away.
+      We focus on ergonomics and meeting you where you work. Its only a keystroke away.
     </h3>
 
     <div className="flex gap-5 p-2 justify-between">
@@ -441,7 +441,7 @@ function Section() {
     </h2>
 
     <h3 className="text-[#737373] p-4 ">
-      We focus on ergonomics and meeting you where you work. It&apos;s only a keystroke away.
+      We focus on ergonomics and meeting you where you work. Its only a keystroke away.
     </h3>
 
     <div className="flex gap-5 p-2 justify-between">
@@ -490,7 +490,7 @@ function Section() {
     </h2>
 
     <h3 className="text-[#737373] p-4 ">
-      We focus on ergonomics and meeting you where you work. It&apos;s only a keystroke away.
+      We focus on ergonomics and meeting where you work. Its only a keystroke away.
     </h3>
 
     <div className="flex gap-5 p-2 justify-between">
